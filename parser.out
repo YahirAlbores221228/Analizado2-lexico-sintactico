@@ -1,0 +1,248 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> package_clause import_clause function_clause
+Rule 2     package_clause -> PACKAGE IDENTIFIER
+Rule 3     import_clause -> IMPORT STRING
+Rule 4     function_clause -> FUNC IDENTIFIER LPAREN RPAREN LLAVE_ABIERTA statements LLAVE_CERRADA
+Rule 5     statements -> statement
+Rule 6     statements -> statement statements
+Rule 7     statement -> statement_print
+Rule 8     statement_print -> IDENTIFIER DOT PRINTLN LPAREN STRING RPAREN SEMICOLON
+
+Terminals, with rules where they appear
+
+DOT                  : 8
+FUNC                 : 4
+IDENTIFIER           : 2 4 8
+IMPORT               : 3
+LLAVE_ABIERTA        : 4
+LLAVE_CERRADA        : 4
+LPAREN               : 4 8
+PACKAGE              : 2
+PRINTLN              : 8
+RPAREN               : 4 8
+SEMICOLON            : 8
+STRING               : 3 8
+error                : 
+
+Nonterminals, with rules where they appear
+
+function_clause      : 1
+import_clause        : 1
+package_clause       : 1
+program              : 0
+statement            : 5 6
+statement_print      : 7
+statements           : 4 6
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . package_clause import_clause function_clause
+    (2) package_clause -> . PACKAGE IDENTIFIER
+
+    PACKAGE         shift and go to state 3
+
+    program                        shift and go to state 1
+    package_clause                 shift and go to state 2
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> package_clause . import_clause function_clause
+    (3) import_clause -> . IMPORT STRING
+
+    IMPORT          shift and go to state 5
+
+    import_clause                  shift and go to state 4
+
+state 3
+
+    (2) package_clause -> PACKAGE . IDENTIFIER
+
+    IDENTIFIER      shift and go to state 6
+
+
+state 4
+
+    (1) program -> package_clause import_clause . function_clause
+    (4) function_clause -> . FUNC IDENTIFIER LPAREN RPAREN LLAVE_ABIERTA statements LLAVE_CERRADA
+
+    FUNC            shift and go to state 8
+
+    function_clause                shift and go to state 7
+
+state 5
+
+    (3) import_clause -> IMPORT . STRING
+
+    STRING          shift and go to state 9
+
+
+state 6
+
+    (2) package_clause -> PACKAGE IDENTIFIER .
+
+    IMPORT          reduce using rule 2 (package_clause -> PACKAGE IDENTIFIER .)
+
+
+state 7
+
+    (1) program -> package_clause import_clause function_clause .
+
+    $end            reduce using rule 1 (program -> package_clause import_clause function_clause .)
+
+
+state 8
+
+    (4) function_clause -> FUNC . IDENTIFIER LPAREN RPAREN LLAVE_ABIERTA statements LLAVE_CERRADA
+
+    IDENTIFIER      shift and go to state 10
+
+
+state 9
+
+    (3) import_clause -> IMPORT STRING .
+
+    FUNC            reduce using rule 3 (import_clause -> IMPORT STRING .)
+
+
+state 10
+
+    (4) function_clause -> FUNC IDENTIFIER . LPAREN RPAREN LLAVE_ABIERTA statements LLAVE_CERRADA
+
+    LPAREN          shift and go to state 11
+
+
+state 11
+
+    (4) function_clause -> FUNC IDENTIFIER LPAREN . RPAREN LLAVE_ABIERTA statements LLAVE_CERRADA
+
+    RPAREN          shift and go to state 12
+
+
+state 12
+
+    (4) function_clause -> FUNC IDENTIFIER LPAREN RPAREN . LLAVE_ABIERTA statements LLAVE_CERRADA
+
+    LLAVE_ABIERTA   shift and go to state 13
+
+
+state 13
+
+    (4) function_clause -> FUNC IDENTIFIER LPAREN RPAREN LLAVE_ABIERTA . statements LLAVE_CERRADA
+    (5) statements -> . statement
+    (6) statements -> . statement statements
+    (7) statement -> . statement_print
+    (8) statement_print -> . IDENTIFIER DOT PRINTLN LPAREN STRING RPAREN SEMICOLON
+
+    IDENTIFIER      shift and go to state 14
+
+    statements                     shift and go to state 15
+    statement                      shift and go to state 16
+    statement_print                shift and go to state 17
+
+state 14
+
+    (8) statement_print -> IDENTIFIER . DOT PRINTLN LPAREN STRING RPAREN SEMICOLON
+
+    DOT             shift and go to state 18
+
+
+state 15
+
+    (4) function_clause -> FUNC IDENTIFIER LPAREN RPAREN LLAVE_ABIERTA statements . LLAVE_CERRADA
+
+    LLAVE_CERRADA   shift and go to state 19
+
+
+state 16
+
+    (5) statements -> statement .
+    (6) statements -> statement . statements
+    (5) statements -> . statement
+    (6) statements -> . statement statements
+    (7) statement -> . statement_print
+    (8) statement_print -> . IDENTIFIER DOT PRINTLN LPAREN STRING RPAREN SEMICOLON
+
+    LLAVE_CERRADA   reduce using rule 5 (statements -> statement .)
+    IDENTIFIER      shift and go to state 14
+
+    statement                      shift and go to state 16
+    statements                     shift and go to state 20
+    statement_print                shift and go to state 17
+
+state 17
+
+    (7) statement -> statement_print .
+
+    IDENTIFIER      reduce using rule 7 (statement -> statement_print .)
+    LLAVE_CERRADA   reduce using rule 7 (statement -> statement_print .)
+
+
+state 18
+
+    (8) statement_print -> IDENTIFIER DOT . PRINTLN LPAREN STRING RPAREN SEMICOLON
+
+    PRINTLN         shift and go to state 21
+
+
+state 19
+
+    (4) function_clause -> FUNC IDENTIFIER LPAREN RPAREN LLAVE_ABIERTA statements LLAVE_CERRADA .
+
+    $end            reduce using rule 4 (function_clause -> FUNC IDENTIFIER LPAREN RPAREN LLAVE_ABIERTA statements LLAVE_CERRADA .)
+
+
+state 20
+
+    (6) statements -> statement statements .
+
+    LLAVE_CERRADA   reduce using rule 6 (statements -> statement statements .)
+
+
+state 21
+
+    (8) statement_print -> IDENTIFIER DOT PRINTLN . LPAREN STRING RPAREN SEMICOLON
+
+    LPAREN          shift and go to state 22
+
+
+state 22
+
+    (8) statement_print -> IDENTIFIER DOT PRINTLN LPAREN . STRING RPAREN SEMICOLON
+
+    STRING          shift and go to state 23
+
+
+state 23
+
+    (8) statement_print -> IDENTIFIER DOT PRINTLN LPAREN STRING . RPAREN SEMICOLON
+
+    RPAREN          shift and go to state 24
+
+
+state 24
+
+    (8) statement_print -> IDENTIFIER DOT PRINTLN LPAREN STRING RPAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 25
+
+
+state 25
+
+    (8) statement_print -> IDENTIFIER DOT PRINTLN LPAREN STRING RPAREN SEMICOLON .
+
+    IDENTIFIER      reduce using rule 8 (statement_print -> IDENTIFIER DOT PRINTLN LPAREN STRING RPAREN SEMICOLON .)
+    LLAVE_CERRADA   reduce using rule 8 (statement_print -> IDENTIFIER DOT PRINTLN LPAREN STRING RPAREN SEMICOLON .)
+

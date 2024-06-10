@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Analizador lexico y sintactico</title>
+<link rel="stylesheet" href="../static/index.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Analizador Léxico, Sintáctico</h1>
+        <form action="/analyze" method="post">
+            <textarea name="code" rows="10" cols="50">{{ input_text }}</textarea>
+            <button type="submit">Ejecutar</button>
+        </form>
+        <div class="result-container">
+            <div class="box">
+                <h2>Análisis Léxico</h2>
+                {% if tokens %}
+                <ul>
+                    {% for token in tokens %}
+                    <li>Línea: {{ token.lineno }}, Tipo: {{ token.type }}, Valor: {{ token.value }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            <div class="box">
+                <h2>Análisis Sintáctico</h2>
+                {% if syntax_message %}
+                <p>{{ syntax_message }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

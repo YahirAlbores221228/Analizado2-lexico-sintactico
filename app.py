@@ -168,7 +168,7 @@ def analyze():
         result = None
         syntax_message = str(e)
 
-    return render_template('index2.html', tokens=tokens, token_info=token_info, token_counts=token_counts, input_text=input_text, syntax_message=syntax_message)
+    return render_template('index.html', tokens=tokens, token_info=token_info, token_counts=token_counts, input_text=input_text, syntax_message=syntax_message)
 
 if __name__ == '__main__':
     app.run(debug=True)

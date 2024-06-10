@@ -3,8 +3,101 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Analizador lexico y sintactico</title>
-<link rel="stylesheet" href="../static/index.css">
+    <title>Analizador léxico y sintáctico</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            font-size: 16px;
+            resize: none;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .result-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .box {
+            width: 48%;
+        }
+
+        h2 {
+            text-align: center;
+            color: #444;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        p {
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
@@ -17,12 +110,47 @@
         <div class="result-container">
             <div class="box">
                 <h2>Análisis Léxico</h2>
-                {% if tokens %}
-                <ul>
-                    {% for token in tokens %}
-                    <li>Línea: {{ token.lineno }}, Tipo: {{ token.type }}, Valor: {{ token.value }}</li>
-                    {% endfor %}
-                </ul>
+                {% if token_info %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Token</th>
+                            <th>Reservada</th>
+                            <th>Identificador</th>
+                            <th>Número</th>
+                            <th>Símbolo</th>
+                            <th>Paréntesis izquierdo</th>
+                            <th>Paréntesis derecho</th>
+                            <th>Llave izquierda</th>
+                            <th>Llave derecha</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for info in token_info %}
+                        <tr>
+                            <td>{{ info.token }}</td>
+                            <td>{{ 'x' if info.type == 'reserved' else '' }}</td>
+                            <td>{{ 'x' if info.type == 'identifier' else '' }}</td>
+                            <td>{{ 'x' if info.type == 'number' else '' }}</td>
+                            <td>{{ 'x' if info.type == 'symbol' else '' }}</td>
+                            <td>{{ 'x' if info.type == 'left_paren' else '' }}</td>
+                            <td>{{ 'x' if info.type == 'right_paren' else '' }}</td>
+                            <td>{{ 'x' if info.type == 'left_brace' else '' }}</td>
+                            <td>{{ 'x' if info.type == 'right_brace' else '' }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <p>Total: 
+                    Reservadas: {{ token_counts.reserved }}, 
+                    Identificadores: {{ token_counts.identifier }}, 
+                    Números: {{ token_counts.number }}, 
+                    Símbolos: {{ token_counts.symbol }}, 
+                    Paréntesis izquierdo: {{ token_counts.left_paren }}, 
+                    Paréntesis derecho: {{ token_counts.right_paren }}, 
+                    Llave izquierda: {{ token_counts.left_brace }}, 
+                    Llave derecha: {{ token_counts.right_brace }}
+                </p>
                 {% endif %}
             </div>
             <div class="box">
